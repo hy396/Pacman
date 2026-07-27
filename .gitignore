@@ -1,0 +1,37 @@
+# Unreal Engine generated
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+SavedLogs/
+
+# Visual Studio / Rider / VSCode
+.vs/
+.vscode/
+.idea/
+*.VC.db
+*.opensdf
+*.opendb
+*.sdf
+*.sln
+*.sln.docstates
+*.suo
+*.user
+*.userosscache
+*.pdb
+*.exp
+*.lib
+*.hproj
+
+# macOS / Xcode
+.DS_Store
+*.xcodeproj
+*.xcworkspace
+
+# UE per-user content
+Content/Developers/
+Content/Collections/
+
+# Misc
+*.log
