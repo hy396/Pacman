@@ -13,6 +13,7 @@
 ## 📑 目录
 
 - [🎮 游戏概览](#-游戏概览)
+- [🕐 创建时间](#-创建时间)
 - [✨ 游戏特色](#-游戏特色)
 - [🛠 技术栈](#-技术栈)
 - [💻 系统要求](#-系统要求)
@@ -40,27 +41,38 @@
 
 ---
 
+## 🕐 创建时间
+
+项目在 **2024-09-24** 开发。
+
+---
+
 ## ✨ 游戏特色
 
 ### 🎮 输入与移动
+
 - 采用 **UE4 经典输入系统**(`InputAction` / `InputAxis`),通过 `BindAxis("MoveX", MoveY)` 实现四方向格子化移动
 - 玩家朝向自动根据输入方向旋转(`FRotator(0, Yaw, 0)`)
 - 速度控制通过 `MaxWalkSpeed` 动态切换
 
 ### 👻 AI 敌人
+
 - 每个敌人由独立的 `AEnemyController : AAIController` 控制
 - AI 通过 `UNavigationSystemV1::GetRandomReachablePointInRadius` 在 10000 单位半径内选点
 - `OnMoveCompleted` 回调中再次寻路,实现**持续随机巡逻**
 
 ### 💎 敌人三态机制
+
 - **Normal**(速度 300) → **Vulnerable**(速度 100,蓝色,可被吃掉) → **Dead**(回出生点,5 秒 CD 后复活)
 - 状态切换全部用 `FTimerHandle` 计时
 
 ### ⏸ 暂停状态保存
+
 - 暂停时遍历所有敌人,记录剩余计时
 - 恢复时按记录的剩余值重建 `SetTimer`,实现"暂停期间不计时"
 
 ### 🎯 受伤无敌
+
 - 玩家受伤后 `CapsuleComponent` 切换到自定义 Profile `"wudi"`,3 秒内不会再次受伤
 - 受伤后回到出生点
 
@@ -68,14 +80,14 @@
 
 ## 🛠 技术栈
 
-| 类别 | 技术 |
-| --- | --- |
-| 引擎 | Unreal Engine 4.27 |
-| 角色 | `ACharacter` + `UStaticMeshComponent` |
-| 碰撞 | `UCapsuleComponent` + `USphereComponent`(豆子触发器) |
-| AI | `AAIController` + `UNavigationSystemV1`(NavMesh) |
-| 输入 | UE4 经典 `InputComponent`(`BindAction` / `BindAxis`) |
-| UI | UMG (`UUserWidget` + `BindWidget`) |
+| 类别     | 技术                                                                                     |
+| -------- | ---------------------------------------------------------------------------------------- |
+| 引擎     | Unreal Engine 4.27                                                                       |
+| 角色     | `ACharacter` + `UStaticMeshComponent`                                                |
+| 碰撞     | `UCapsuleComponent` + `USphereComponent`(豆子触发器)                                 |
+| AI       | `AAIController` + `UNavigationSystemV1`(NavMesh)                                     |
+| 输入     | UE4 经典`InputComponent`(`BindAction` / `BindAxis`)                                |
+| UI       | UMG (`UUserWidget` + `BindWidget`)                                                   |
 | 模块依赖 | `Core`、`CoreUObject`、`Engine`、`InputCore`、`NavigationSystem`、`AIModule` |
 
 ---
@@ -83,12 +95,14 @@
 ## 💻 系统要求
 
 ### 运行环境
+
 - **操作系统**:Windows 10 / 11 (64-bit)
 - **GPU**:支持 DirectX 11 / 12
 - **内存**:≥ 8 GB RAM
 - **硬盘**:≥ 5 GB 可用空间
 
 ### 开发环境
+
 - **Unreal Engine 4.27**(通过 Epic Games Launcher 安装)
 - **Visual Studio 2019 / 2022**(需安装 `Game Development with C++` 工作负载)
 - **Git**(可选,用于克隆仓库)
@@ -133,12 +147,12 @@ REM 3. 启动编辑器
 
 ### ⚠️ 首次打开常见问题
 
-| 现象 | 解决方案 |
-| --- | --- |
-| `LogNavigationSystem: Warning` 找不到 NavMesh | 打开地图后 `RecastNavMesh-Default` → Build,或按 `P` 预览 NavMesh 是否覆盖可走区域 |
-| 玩家穿过墙体 | 确认地图中墙体是 `BlockAll` 静态网格,且已构建 NavMesh |
-| 输入无响应 | `Edit → Project Settings → Input` 确认 `MoveX` / `MoveY` / `StartGame` / `PauseGame` 已配置 |
-| C++ 编译失败 | 通过 Visual Studio Installer 安装 `.NET Framework 4.6.2 Targeting Pack` 和 `Windows 10 SDK` |
+| 现象                                            | 解决方案                                                                                                |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `LogNavigationSystem: Warning` 找不到 NavMesh | 打开地图后`RecastNavMesh-Default` → Build,或按 `P` 预览 NavMesh 是否覆盖可走区域                   |
+| 玩家穿过墙体                                    | 确认地图中墙体是`BlockAll` 静态网格,且已构建 NavMesh                                                  |
+| 输入无响应                                      | `Edit → Project Settings → Input` 确认 `MoveX` / `MoveY` / `StartGame` / `PauseGame` 已配置 |
+| C++ 编译失败                                    | 通过 Visual Studio Installer 安装`.NET Framework 4.6.2 Targeting Pack` 和 `Windows 10 SDK`          |
 
 ---
 
@@ -146,28 +160,28 @@ REM 3. 启动编辑器
 
 ### 键位
 
-| 操作 | 键位 | 说明 |
-| --- | --- | --- |
-| 🏃 水平移动 | `A` / `D` 或 `←` / `→` | X 轴移动,自动旋转 0° / 180° |
-| 🏃 垂直移动 | `W` / `S` 或 `↑` / `↓` | Y 轴移动,自动旋转 ±90° |
-| ▶ 开始游戏 | 任意 `StartGame` 绑定键 | 触发 `AMyGameModeBase::StartGame()`,进入 EPlay 状态 |
-| ⏸ 暂停/继续 | 任意 `PauseGame` 绑定键 | EPause ↔ EPlay 切换,保留所有敌人计时 |
-| 🔄 重新开始 | 任意 `RestartGame` 绑定键 | `ConsoleCommand("RestartLevel")` |
+| 操作         | 键位                             | 说明                                                 |
+| ------------ | -------------------------------- | ---------------------------------------------------- |
+| 🏃 水平移动  | `A` / `D` 或 `←` / `→` | X 轴移动,自动旋转 0° / 180°                        |
+| 🏃 垂直移动  | `W` / `S` 或 `↑` / `↓` | Y 轴移动,自动旋转 ±90°                             |
+| ▶ 开始游戏  | 任意`StartGame` 绑定键         | 触发`AMyGameModeBase::StartGame()`,进入 EPlay 状态 |
+| ⏸ 暂停/继续 | 任意`PauseGame` 绑定键         | EPause ↔ EPlay 切换,保留所有敌人计时                |
+| 🔄 重新开始  | 任意`RestartGame` 绑定键       | `ConsoleCommand("RestartLevel")`                   |
 
 ### 收集物
 
-| 图标 | 名称 | 效果 |
-| --- | --- | --- |
-| 🟡 | 普通豆子 | 计数 -1,全部吃完 → EWin |
-| ⚡ | 能量豆(`bIsSuperPacdot=true`) | 计数 -1 + 所有敌人进入 Vulnerable 5 秒 |
+| 图标 | 名称                            | 效果                                   |
+| ---- | ------------------------------- | -------------------------------------- |
+| 🟡   | 普通豆子                        | 计数 -1,全部吃完 → EWin               |
+| ⚡   | 能量豆(`bIsSuperPacdot=true`) | 计数 -1 + 所有敌人进入 Vulnerable 5 秒 |
 
 ### 敌人状态
 
-| 状态 | 速度 | 颜色 | 被玩家碰到 |
-| --- | --- | --- | --- |
-| 🟦 Normal | 300 | 红/粉/蓝/绿(原色) | 玩家 `InJured()` |
-| 🔵 Vulnerable | 100 | 蓝色 | 敌人 `SetDead()`,回出生点 5 秒 |
-| ⚫ Dead | 0 | 不可见/淡色 | 无碰撞(`SetCollisionProfileName("wudi")`) |
+| 状态          | 速度 | 颜色              | 被玩家碰到                                  |
+| ------------- | ---- | ----------------- | ------------------------------------------- |
+| 🟦 Normal     | 300  | 红/粉/蓝/绿(原色) | 玩家`InJured()`                           |
+| 🔵 Vulnerable | 100  | 蓝色              | 敌人`SetDead()`,回出生点 5 秒             |
+| ⚫ Dead       | 0    | 不可见/淡色       | 无碰撞(`SetCollisionProfileName("wudi")`) |
 
 ### 受伤与死亡
 
@@ -484,7 +498,7 @@ for (TActorIterator<APacmanEnemy> i(GetWorld()); i; ++i) Enemies.Add(Cast<APacma
 
 - 🎮 [Unreal Engine](https://www.unrealengine.com/) — Epic Games
 - 🟡 经典玩法灵感 — [Pac-Man](https://www.bandainamcoentertainment.com/) (Bandai Namco)
-- 🧭 寻路系统 — [Recast & Detour](https://recastnavdetour.org/)
+- 🧭 寻路系统 — [Recast &amp; Detour](https://recastnavdetour.org/)
 - 📚 感谢所有开源 UE 学习社区
 
 ---
